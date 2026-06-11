@@ -23,7 +23,7 @@ export default function Home() {
     </h1>
 
     <p className="max-w-3xl text-2xl">
-      Ontdek de mooiste bestemmingen, hotels en uitjes voor gezinnen.
+      Ontdek de mooiste bestemmingen en verblijven voor gezinnen.
     </p>
 
     <button className="mt-8 rounded-full bg-white text-black px-8 py-4 text-lg">
@@ -32,45 +32,105 @@ export default function Home() {
   </div>
 </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <h2 className="mb-8 text-3xl font-semibold">
-          Waar ben je naar op zoek?
-        </h2>
+<section className="mx-auto max-w-6xl px-6 pt-12 pb-24">
+  <h2 className="mb-10 text-3xl font-semibold">
+  Vind jullie perfecte vakantie
+  </h2>
 
-        <div className="grid gap-6 md:grid-cols-4">
-          <div className="rounded-3xl bg-white p-8 shadow-sm">
-            <div className="mb-6 text-4xl">🏨</div>
-            <h3 className="mb-2 text-xl font-semibold">Hotels</h3>
-            <p className="text-gray-600">
-              Kindvriendelijke hotels die gezinnen écht fijn vinden.
-            </p>
-          </div>
+  <div className="grid gap-6 md:grid-cols-3">
+  <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+    <div className="h-24 bg-[#d8cfc3]" />
+    <div className="p-8">
+      <p className="mb-3 text-sm uppercase tracking-[0.25em] text-gray-400">
+        Step 01
+      </p>
+      <h3 className="mb-4 text-2xl font-semibold">Vacation Types</h3>
+      <ul className="space-y-2 text-gray-600">
+        <li>Strandvakantie met kinderen</li>
+        <li>Actieve gezinsvakantie</li>
+        <li>Eerste vakantie met baby</li>
+        <li>Rondreis met kinderen</li>
+        <li>Luxe familievakantie</li>
+      </ul>
+    </div>
+  </div>
 
-          <div className="rounded-3xl bg-white p-8 shadow-sm">
-            <div className="mb-6 text-4xl">🌍</div>
-            <h3 className="mb-2 text-xl font-semibold">Bestemmingen</h3>
-            <p className="text-gray-600">
-              Van Mallorca tot Toscane: plekken die werken met kinderen.
-            </p>
-          </div>
+  <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+    <div className="h-24 bg-[#c8d6d9]" />
+    <div className="p-8">
+      <p className="mb-3 text-sm uppercase tracking-[0.25em] text-gray-400">
+        Step 02
+      </p>
+      <h3 className="mb-4 text-2xl font-semibold">Destinations</h3>
+      <ul className="space-y-2 text-gray-600">
+        <li>Mallorca</li>
+        <li>Toscane</li>
+        <li>Algarve</li>
+        <li>Zuid-Tirol</li>
+        <li>Zeeland</li>
+      </ul>
+    </div>
+  </div>
 
-          <div className="rounded-3xl bg-white p-8 shadow-sm">
-            <div className="mb-6 text-4xl">🎡</div>
-            <h3 className="mb-2 text-xl font-semibold">Uitjes</h3>
-            <p className="text-gray-600">
-              Leuke plekken voor een dag weg met het gezin.
-            </p>
-          </div>
+  <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+    <div className="h-24 bg-[#d9d1c7]" />
+    <div className="p-8">
+      <p className="mb-3 text-sm uppercase tracking-[0.25em] text-gray-400">
+        Step 03
+      </p>
+      <h3 className="mb-4 text-2xl font-semibold">Stays</h3>
+      <ul className="space-y-2 text-gray-600">
+        <li>Zafiro Palace Mallorca</li>
+        <li>Martinhal Sagres</li>
+        <li>Landal Miggelenberg</li>
+        <li>Falkensteiner Family Resort</li>
+        <li>Glamping aan zee</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
 
-          <div className="rounded-3xl bg-white p-8 shadow-sm">
-            <div className="mb-6 text-4xl">🍴</div>
-            <h3 className="mb-2 text-xl font-semibold">Restaurants</h3>
-            <p className="text-gray-600">
-              Eten op plekken waar ouders én kinderen blij van worden.
-            </p>
-          </div>
-        </div>
-      </section>
+<section className="mx-auto max-w-7xl px-6 pb-24">
+  <h2 className="mb-10 text-4xl font-semibold">
+    Populaire bestemmingen
+  </h2>
+
+  <div className="grid gap-6 md:grid-cols-3">
+
+    <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+      <div className="h-80 bg-[#d7d0c5]" />
+      <div className="p-6">
+        <h3 className="text-2xl font-semibold">Mallorca</h3>
+        <p className="mt-2 text-gray-600">
+          Zon, stranden en kindvriendelijke resorts.
+        </p>
+      </div>
+    </div>
+
+    <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+      <div className="h-80 bg-[#c8d6d9]" />
+      <div className="p-6">
+        <h3 className="text-2xl font-semibold">Toscane</h3>
+        <p className="mt-2 text-gray-600">
+          Italiaanse charme, zwembaden en natuur.
+        </p>
+      </div>
+    </div>
+
+    <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+      <div className="h-80 bg-[#d9d1c7]" />
+      <div className="p-6">
+        <h3 className="text-2xl font-semibold">Algarve</h3>
+        <p className="mt-2 text-gray-600">
+          Prachtige stranden en veel familieresorts.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
     </main>
   );
 }
