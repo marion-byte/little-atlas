@@ -1,23 +1,36 @@
+import Image from "next/image";
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#faf7f2] text-[#171717]">
-      <section className="mx-auto max-w-6xl px-6 py-24 text-center">
-        <p className="mb-5 text-sm uppercase tracking-[0.35em] text-gray-500">
-          Places Families Love
-        </p>
+      <section className="relative h-[80vh] overflow-hidden">
+  <Image
+    src="/hero.jpg"
+    alt="Little Atlas"
+    fill
+    className="object-cover"
+    priority
+  />
 
-        <h1 className="mb-6 text-6xl font-bold tracking-tight">
-          Little Atlas
-        </h1>
+  <div className="absolute inset-0 bg-black/30" />
 
-        <p className="mx-auto mb-10 max-w-3xl text-2xl leading-relaxed text-gray-700">
-          Ontdek de mooiste bestemmingen, hotels en uitjes voor gezinnen.
-        </p>
+  <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+    <p className="mb-5 text-sm uppercase tracking-[0.35em]">
+      Places Families Love
+    </p>
 
-        <button className="rounded-full bg-black px-8 py-4 text-lg text-white">
-          Ontdek plekken
-        </button>
-      </section>
+    <h1 className="mb-6 text-7xl font-bold">
+      Little Atlas
+    </h1>
+
+    <p className="max-w-3xl text-2xl">
+      Ontdek de mooiste bestemmingen, hotels en uitjes voor gezinnen.
+    </p>
+
+    <button className="mt-8 rounded-full bg-white text-black px-8 py-4 text-lg">
+      Ontdek plekken
+    </button>
+  </div>
+</section>
 
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <h2 className="mb-8 text-3xl font-semibold">
