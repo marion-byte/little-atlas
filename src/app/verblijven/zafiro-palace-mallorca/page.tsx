@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import type { Stay } from "@/types/stay";
 
 const navigation = [
   { label: "Bestemmingen", href: "/bestemmingen" },
@@ -9,24 +11,216 @@ const navigation = [
   { label: "Verblijven", href: "/verblijven" },
 ];
 
-const stay = {
+const stay: Stay = {
+  id: "stay_zafiro_palace_mallorca",
+  slug: "zafiro-palace-mallorca",
+  status: "published",
+
   feed: {
+    externalId: "zafiro-palace-mallorca-demo",
+    provider: "booking",
+
     name: "Zafiro Palace Mallorca",
     slug: "zafiro-palace-mallorca",
+
     destination: "Mallorca",
     destinationSlug: "mallorca",
     region: "Alcúdia",
     country: "Spanje",
-    propertyType: "Luxury family resort",
+    countryCode: "ES",
+
+    propertyType: "resort",
     stars: 5,
-    reviewScore: 9.1,
-    reviewCount: 1248,
-    priceFrom: 312,
-    currency: "EUR",
+
+    location: {
+      latitude: 39.843,
+      longitude: 3.132,
+      city: "Alcúdia",
+      region: "Alcúdia",
+      country: "Spanje",
+      beachDistanceMeters: 500,
+      airportDistanceKm: 61,
+      centerDistanceKm: 1.5,
+      carRecommended: false,
+      walkableToRestaurants: true,
+      walkableToBeach: true,
+    },
+
     heroImage: "/mallorca.jpg",
     gallery: ["/mallorca.jpg", "/mallorca.jpg", "/mallorca.jpg"],
+
+    images: [
+      {
+        url: "/mallorca.jpg",
+        alt: "Zafiro Palace Mallorca",
+        role: "hero",
+        provider: "manual",
+        position: 1,
+      },
+      {
+        url: "/mallorca.jpg",
+        alt: "Zwembad en resortomgeving bij Zafiro Palace Mallorca",
+        role: "gallery",
+        provider: "manual",
+        position: 2,
+      },
+      {
+        url: "/mallorca.jpg",
+        alt: "Familievakantie op Mallorca",
+        role: "location",
+        provider: "manual",
+        position: 3,
+      },
+    ],
+
+    reviews: [
+      {
+        provider: "booking",
+        score: 9.1,
+        scale: 10,
+        normalizedScore: 9.1,
+        count: 1248,
+        label: "Excellent",
+        url: "https://www.booking.com",
+      },
+    ],
+
+    primaryReview: {
+      provider: "booking",
+      score: 9.1,
+      scale: 10,
+      normalizedScore: 9.1,
+      count: 1248,
+      label: "Excellent",
+      url: "https://www.booking.com",
+    },
+
+    reviewScore: 9.1,
+    reviewCount: 1248,
+    reviewProvider: "booking",
+    reviewLabel: "Excellent",
+
+    priceFrom: 312,
+    currency: "EUR",
     affiliateUrl: "https://www.booking.com",
+
+    providers: [
+      {
+        provider: "booking",
+        externalId: "zafiro-palace-mallorca-demo",
+        affiliateUrl: "https://www.booking.com",
+        deepLink: "https://www.booking.com",
+        priceFrom: 312,
+        currency: "EUR",
+        available: true,
+        priority: 1,
+      },
+    ],
+
     amenities: [
+      {
+        key: "kids_club",
+        label: "Kidsclub",
+        category: "family",
+        source: "feed",
+      },
+      {
+        key: "multiple_pools",
+        label: "Meerdere zwembaden",
+        category: "pool",
+        source: "feed",
+      },
+      {
+        key: "family_suites",
+        label: "Familiesuites",
+        category: "room",
+        source: "feed",
+      },
+      {
+        key: "spa",
+        label: "Spa",
+        category: "wellness",
+        source: "feed",
+      },
+      {
+        key: "restaurants",
+        label: "Restaurants",
+        category: "food",
+        source: "feed",
+      },
+      {
+        key: "children_pool",
+        label: "Kinderbad",
+        category: "family",
+        source: "feed",
+      },
+      {
+        key: "near_beach",
+        label: "Dicht bij strand",
+        category: "beach",
+        source: "feed",
+      },
+      {
+        key: "fitness",
+        label: "Fitness",
+        category: "sports",
+        source: "feed",
+      },
+    ],
+
+    rooms: [
+      {
+        id: "junior-suite",
+        name: "Junior Suite",
+        description:
+          "Comfortabele suite voor gezinnen die extra ruimte willen ten opzichte van een standaardkamer.",
+        maxGuests: 3,
+        bedrooms: 1,
+        bathrooms: 1,
+        hasSeparateBedroom: false,
+        hasTerrace: true,
+        provider: "booking",
+      },
+      {
+        id: "family-suite",
+        name: "Family Suite",
+        description:
+          "Ruimere optie voor families die slapen en leven beter willen scheiden.",
+        maxGuests: 4,
+        bedrooms: 1,
+        bathrooms: 1,
+        hasSeparateBedroom: true,
+        hasTerrace: true,
+        provider: "booking",
+      },
+      {
+        id: "swim-up-suite",
+        name: "Swim-up Suite",
+        description:
+          "Populaire keuze voor gezinnen die direct toegang tot water willen.",
+        maxGuests: 4,
+        bedrooms: 1,
+        bathrooms: 1,
+        hasSeparateBedroom: true,
+        hasTerrace: true,
+        hasPrivatePool: false,
+        provider: "booking",
+      },
+      {
+        id: "penthouse-suite",
+        name: "Penthouse Suite",
+        description:
+          "Voor gezinnen die meer privacy, uitzicht en een luxere beleving zoeken.",
+        maxGuests: 4,
+        bedrooms: 1,
+        bathrooms: 1,
+        hasSeparateBedroom: true,
+        hasTerrace: true,
+        provider: "booking",
+      },
+    ],
+
+    rawAmenities: [
       "Kidsclub",
       "Meerdere zwembaden",
       "Familiesuites",
@@ -36,10 +230,12 @@ const stay = {
       "Dicht bij strand",
       "Fitness",
     ],
-    provider: "booking",
-    externalId: "zafiro-palace-mallorca-demo",
-    latitude: 39.843,
-    longitude: 3.132,
+    rawRoomTypes: [
+      "Junior Suite",
+      "Family Suite",
+      "Swim-up Suite",
+      "Penthouse Suite",
+    ],
   },
 
   editorial: {
@@ -51,117 +247,156 @@ const stay = {
       "Zafiro Palace Mallorca is een ruim opgezet vijfsterrenresort voor gezinnen die comfort, zwembaden en strand binnen handbereik willen combineren met een premium vakantiegevoel.",
     whySelected:
       "We selecteren dit verblijf vanwege de combinatie van familiesuites, meerdere zwembaden, kindvriendelijke faciliteiten en de ligging bij het noorden van Mallorca. Het voelt verzorgd en compleet, zonder dat het zijn rustige, mediterrane uitstraling verliest.",
+    bestFor: [
+      "Gezinnen die luxe en gemak zoeken",
+      "Families met jonge kinderen",
+      "Ouders die strand en resort willen combineren",
+      "Meer-generatie vakanties",
+    ],
+    highlights: [
+      "Meerdere zwembaden voor verschillende leeftijden",
+      "Suites die goed werken voor gezinnen",
+      "Dicht bij strand en boulevard",
+      "Restaurants op het resort",
+      "Premium uitstraling zonder formeel te voelen",
+    ],
+    littleAtlasNotes: [
+      "Beste keuze als je Noord-Mallorca wilt combineren met resortcomfort.",
+      "Let bij boeken goed op kamertype: swim-up en family suites verschillen sterk in beleving.",
+      "Interessant voor gezinnen die niet elke avond buiten de deur willen eten.",
+    ],
+    nearby: [
+      "Strand van Alcúdia",
+      "Port d’Alcúdia",
+      "Oude centrum van Alcúdia",
+      "Playa de Muro",
+      "Natuurgebied S’Albufera",
+    ],
+    faqs: [
+      {
+        question: "Is Zafiro Palace Mallorca geschikt voor jonge kinderen?",
+        answer:
+          "Ja, vooral door de zwembaden, familiesuites en kindvriendelijke resortopzet.",
+      },
+      {
+        question: "Ligt het hotel direct aan het strand?",
+        answer:
+          "Het verblijf ligt dicht bij het strand van Alcúdia, maar controleer altijd de exacte afstand per aanbieder.",
+      },
+      {
+        question: "Is dit een all-inclusive resort?",
+        answer:
+          "Beschikbare verzorging kan per aanbieder en seizoen verschillen. Controleer dit bij het boeken.",
+      },
+    ],
     seoTitle:
       "Zafiro Palace Mallorca met kinderen | Little Atlas familieverblijf",
     seoDescription:
       "Bekijk Zafiro Palace Mallorca als premium familieverblijf op Mallorca. Inclusief highlights, ligging, kamers, kindvriendelijkheid en boekingslink.",
+    aiGenerated: false,
+    reviewedByEditor: true,
   },
 
-  familyFit: [
-    {
-      title: "Baby’s",
-      text: "Ruime kamers, liftvoorzieningen en resortfaciliteiten maken dit een comfortabele keuze met baby.",
-    },
-    {
-      title: "Peuters",
-      text: "De zwembaden, korte afstanden en kindvriendelijke sfeer zijn ideaal voor peuters.",
-    },
-    {
-      title: "Schoolgaande kinderen",
-      text: "Schoolgaande kinderen hebben veel afwisseling met water, activiteiten en restaurants.",
-    },
-    {
-      title: "Tieners",
-      text: "Tieners waarderen vooral de ruimte, zwembaden, fitness en ligging dicht bij Alcúdia.",
-    },
-  ],
+  familyAttributes: {
+    babyFriendly: true,
+    toddlerFriendly: true,
+    kidsFriendly: true,
+    teenFriendly: true,
 
-  highlights: [
-    "Meerdere zwembaden voor verschillende leeftijden",
-    "Suites die goed werken voor gezinnen",
-    "Dicht bij strand en boulevard",
-    "Restaurants op het resort",
-    "Premium uitstraling zonder formeel te voelen",
-  ],
+    babyCots: true,
+    babysitting: null,
+    kidsClub: true,
+    childrenPool: true,
+    waterPark: false,
+    playground: null,
+    strollerFriendly: true,
 
-  rooms: [
-    {
-      name: "Junior Suite",
-      description:
-        "Comfortabele suite voor gezinnen die extra ruimte willen ten opzichte van een standaardkamer.",
-    },
-    {
-      name: "Family Suite",
-      description:
-        "Ruimere optie voor families die slapen en leven beter willen scheiden.",
-    },
-    {
-      name: "Swim-up Suite",
-      description:
-        "Populaire keuze voor gezinnen die direct toegang tot water willen.",
-    },
-    {
-      name: "Penthouse Suite",
-      description:
-        "Voor gezinnen die meer privacy, uitzicht en een luxere beleving zoeken.",
-    },
-  ],
+    familyRooms: true,
+    connectingRooms: null,
+    kitchenOrKitchenette: null,
+    laundryFacilities: null,
 
-  location: [
-    "Strand van Alcúdia",
-    "Port d’Alcúdia",
-    "Oude centrum van Alcúdia",
-    "Playa de Muro",
-    "Natuurgebied S’Albufera",
-  ],
+    shortTransfer: false,
+    walkableArea: true,
+    calmSetting: true,
 
-  notes: [
-    "Beste keuze als je Noord-Mallorca wilt combineren met resortcomfort.",
-    "Let bij boeken goed op kamertype: swim-up en family suites verschillen sterk in beleving.",
-    "Interessant voor gezinnen die niet elke avond buiten de deur willen eten.",
-  ],
+    source: "hybrid",
+    confidence: 82,
+  },
 
-  similarStays: [
-    {
-      name: "Ikos Porto Petro",
-      location: "Porto Petro, Mallorca",
-      image: "/mallorca.jpg",
-      href: "/verblijven/ikos-porto-petro",
+  familyScores: {
+    babies: {
+      score: 88,
+      label: "excellent",
+      reasons: [
+        "Ruime kamers",
+        "Kinderbad aanwezig",
+        "Rustige resortopzet",
+        "Goed beloopbare omgeving",
+      ],
+      source: "hybrid",
+      confidence: 82,
     },
-    {
-      name: "Martinhal Sagres",
-      location: "Algarve, Portugal",
-      image: "/mallorca.jpg",
-      href: "/verblijven/martinhal-sagres",
+    toddlers: {
+      score: 91,
+      label: "excellent",
+      reasons: [
+        "Meerdere zwembaden",
+        "Kidsclub",
+        "Korte afstanden binnen het resort",
+        "Dicht bij strand",
+      ],
+      source: "hybrid",
+      confidence: 86,
     },
-    {
-      name: "Luxe familiehotel Toscane",
-      location: "Toscane, Italië",
-      image: "/mallorca.jpg",
-      href: "/bestemmingen/toscane",
+    kids: {
+      score: 89,
+      label: "excellent",
+      reasons: [
+        "Veel waterplezier",
+        "Restaurants op het resort",
+        "Ruime suites",
+        "Activiteiten voor kinderen",
+      ],
+      source: "hybrid",
+      confidence: 84,
     },
-  ],
+    teens: {
+      score: 74,
+      label: "medium",
+      reasons: [
+        "Zwembaden en fitness aanwezig",
+        "Dicht bij Alcúdia",
+        "Minder uitgesproken tienerprogramma",
+      ],
+      source: "hybrid",
+      confidence: 72,
+    },
+  },
 
-  faqs: [
+  collectionMatches: [
     {
-      question: "Is Zafiro Palace Mallorca geschikt voor jonge kinderen?",
-      answer:
-        "Ja, vooral door de zwembaden, familiesuites en kindvriendelijke resortopzet.",
+      collectionSlug: "luxe-familiehotels-mallorca",
+      collectionTitle: "Luxe familiehotels Mallorca",
+      matchScore: 94,
+      reasons: ["5 sterren", "Hoge reviewscore", "Familiesuites", "Kidsclub"],
+      ruleBased: true,
+      aiAssisted: true,
     },
     {
-      question: "Ligt het hotel direct aan het strand?",
-      answer:
-        "Het verblijf ligt dicht bij het strand van Alcúdia, maar controleer altijd de exacte afstand per aanbieder.",
-    },
-    {
-      question: "Is dit een all-inclusive resort?",
-      answer:
-        "Beschikbare verzorging kan per aanbieder en seizoen verschillen. Controleer dit bij het boeken.",
+      collectionSlug: "op-vakantie-met-peuters",
+      collectionTitle: "Op vakantie met peuters",
+      matchScore: 91,
+      reasons: ["Kinderbad", "Kidsclub", "Resortopzet", "Dicht bij strand"],
+      ruleBased: true,
+      aiAssisted: true,
     },
   ],
 };
 
 export default function ZafiroPalaceMallorcaPage() {
+  const primaryReview = stay.feed.primaryReview;
+
   return (
     <main className="min-h-screen bg-[#faf7f2] text-[#171717]">
       <header className="border-b border-black/10 bg-[#faf7f2]">
@@ -219,10 +454,16 @@ export default function ZafiroPalaceMallorcaPage() {
             <div className="mt-6 flex flex-wrap gap-2">
               <Badge>{stay.feed.region}</Badge>
               <Badge>{stay.feed.stars} sterren</Badge>
-              <Badge>Score {stay.feed.reviewScore}</Badge>
-              <Badge>
-                vanaf {stay.feed.currency} {stay.feed.priceFrom}
-              </Badge>
+              {primaryReview?.normalizedScore && (
+                <Badge>
+                  {primaryReview.label} {primaryReview.normalizedScore}
+                </Badge>
+              )}
+              {stay.feed.priceFrom && (
+                <Badge>
+                  vanaf {stay.feed.currency} {stay.feed.priceFrom}
+                </Badge>
+              )}
             </div>
 
             <a
@@ -235,7 +476,7 @@ export default function ZafiroPalaceMallorcaPage() {
             </a>
 
             <p className="mt-3 text-center text-xs text-black/40">
-              Partnerlink via {stay.feed.provider}
+              Partnerlink via {stay.feed.reviewProvider}
             </p>
           </div>
         </div>
@@ -246,6 +487,7 @@ export default function ZafiroPalaceMallorcaPage() {
             alt={stay.feed.name}
             fill
             priority
+            sizes="(min-width: 1280px) 1184px, calc(100vw - 48px)"
             className="object-cover"
           />
         </div>
@@ -255,11 +497,19 @@ export default function ZafiroPalaceMallorcaPage() {
         <InfoCard title="Type verblijf" value={stay.feed.propertyType} />
         <InfoCard
           title="Reviewscore"
-          value={`${stay.feed.reviewScore} / 10 uit ${stay.feed.reviewCount} reviews`}
+          value={
+            stay.feed.reviewScore && stay.feed.reviewCount
+              ? `${stay.feed.reviewScore} / 10 uit ${stay.feed.reviewCount} reviews`
+              : "Nog geen reviewscore"
+          }
         />
         <InfoCard
           title="Prijsindicatie"
-          value={`Vanaf ${stay.feed.currency} ${stay.feed.priceFrom} per nacht`}
+          value={
+            stay.feed.priceFrom
+              ? `Vanaf ${stay.feed.currency} ${stay.feed.priceFrom} per nacht`
+              : "Prijs op aanvraag"
+          }
         />
       </SectionGrid>
 
@@ -282,18 +532,42 @@ export default function ZafiroPalaceMallorcaPage() {
         </h2>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {stay.familyFit.map((item) => (
-            <Card key={item.title}>
-              <h3 className="text-xl font-semibold">{item.title}</h3>
-              <p className="mt-4 leading-7 text-black/70">{item.text}</p>
-            </Card>
-          ))}
+          <Card>
+            <h3 className="text-xl font-semibold">Baby’s</h3>
+            <p className="mt-4 leading-7 text-black/70">
+              {stay.familyScores.babies.reasons.join(", ")}.
+            </p>
+          </Card>
+
+          <Card>
+            <h3 className="text-xl font-semibold">Peuters</h3>
+            <p className="mt-4 leading-7 text-black/70">
+              {stay.familyScores.toddlers.reasons.join(", ")}.
+            </p>
+          </Card>
+
+          <Card>
+            <h3 className="text-xl font-semibold">Schoolgaande kinderen</h3>
+            <p className="mt-4 leading-7 text-black/70">
+              {stay.familyScores.kids.reasons.join(", ")}.
+            </p>
+          </Card>
+
+          <Card>
+            <h3 className="text-xl font-semibold">Tieners</h3>
+            <p className="mt-4 leading-7 text-black/70">
+              {stay.familyScores.teens.reasons.join(", ")}.
+            </p>
+          </Card>
         </div>
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-2">
-        <ListBlock title="In één oogopslag" items={stay.feed.amenities} />
-        <ListBlock title="Hoogtepunten" items={stay.highlights} />
+        <ListBlock
+          title="In één oogopslag"
+          items={stay.feed.amenities.map((amenity) => amenity.label)}
+        />
+        <ListBlock title="Hoogtepunten" items={stay.editorial.highlights} />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16">
@@ -307,12 +581,14 @@ export default function ZafiroPalaceMallorcaPage() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {stay.rooms.map((room) => (
-                <div key={room.name} className="rounded-3xl bg-white/10 p-6">
+              {stay.feed.rooms.map((room) => (
+                <div key={room.id} className="rounded-3xl bg-white/10 p-6">
                   <h3 className="text-lg font-semibold">{room.name}</h3>
-                  <p className="mt-3 leading-7 text-white/70">
-                    {room.description}
-                  </p>
+                  {room.description && (
+                    <p className="mt-3 leading-7 text-white/70">
+                      {room.description}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
@@ -328,17 +604,18 @@ export default function ZafiroPalaceMallorcaPage() {
           </h2>
 
           <p className="mt-6 text-lg leading-8 text-black/70">
-            Dit verblijf ligt in de regio {stay.feed.region}, op{" "}
+            Dit verblijf ligt in de regio {stay.feed.location.region}, op{" "}
             {stay.feed.destination}. De locatievelden zijn neutraal opgezet,
             zodat ze later uit meerdere feeds kunnen komen.
           </p>
 
           <p className="mt-4 text-sm text-black/50">
-            Coördinaten: {stay.feed.latitude}, {stay.feed.longitude}
+            Coördinaten: {stay.feed.location.latitude},{" "}
+            {stay.feed.location.longitude}
           </p>
         </div>
 
-        <ListBlock title="In de buurt" items={stay.location} />
+        <ListBlock title="In de buurt" items={stay.editorial.nearby} />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16">
@@ -350,7 +627,7 @@ export default function ZafiroPalaceMallorcaPage() {
           </h2>
 
           <div className="grid gap-4 md:grid-cols-3">
-            {stay.notes.map((note) => (
+            {stay.editorial.littleAtlasNotes.map((note) => (
               <div key={note} className="rounded-3xl bg-[#faf7f2] p-6">
                 <p className="leading-7 text-black/70">{note}</p>
               </div>
@@ -363,7 +640,7 @@ export default function ZafiroPalaceMallorcaPage() {
         <h2 className="mb-8 text-4xl font-semibold tracking-tight">FAQ</h2>
 
         <div className="space-y-4">
-          {stay.faqs.map((item) => (
+          {stay.editorial.faqs.map((item) => (
             <Card key={item.question}>
               <h3 className="text-lg font-semibold">{item.question}</h3>
               <p className="mt-3 leading-7 text-black/70">{item.answer}</p>
@@ -374,29 +651,25 @@ export default function ZafiroPalaceMallorcaPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-16">
         <h2 className="mb-8 text-4xl font-semibold tracking-tight">
-          Vergelijkbare verblijven
+          Vergelijkbare collecties
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {stay.similarStays.map((item) => (
+        <div className="grid gap-6 md:grid-cols-2">
+          {stay.collectionMatches.map((item) => (
             <Link
-              key={item.name}
-              href={item.href}
-              className="group overflow-hidden rounded-[2rem] bg-white/70 ring-1 ring-black/5"
+              key={item.collectionSlug}
+              href={`/collecties/${item.collectionSlug}`}
+              className="rounded-[2rem] bg-white/70 p-8 ring-1 ring-black/5"
             >
-              <div className="relative h-64">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                />
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-semibold">{item.name}</h3>
-                <p className="mt-2 text-black/60">{item.location}</p>
-              </div>
+              <p className="text-sm text-black/50">
+                Matchscore {item.matchScore}
+              </p>
+              <h3 className="mt-3 text-2xl font-semibold">
+                {item.collectionTitle}
+              </h3>
+              <p className="mt-4 leading-7 text-black/70">
+                {item.reasons.join(", ")}
+              </p>
             </Link>
           ))}
         </div>
@@ -424,7 +697,7 @@ export default function ZafiroPalaceMallorcaPage() {
   );
 }
 
-function SectionGrid({ children }: { children: React.ReactNode }) {
+function SectionGrid({ children }: { children: ReactNode }) {
   return (
     <section className="mx-auto grid max-w-7xl gap-8 px-6 py-10 lg:grid-cols-3">
       {children}
@@ -432,7 +705,7 @@ function SectionGrid({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Badge({ children }: { children: React.ReactNode }) {
+function Badge({ children }: { children: ReactNode }) {
   return (
     <span className="rounded-full bg-[#faf7f2] px-4 py-2 text-sm text-black/70 ring-1 ring-black/10">
       {children}
@@ -440,7 +713,7 @@ function Badge({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Card({ children }: { children: React.ReactNode }) {
+function Card({ children }: { children: ReactNode }) {
   return (
     <div className="rounded-3xl bg-white/70 p-7 ring-1 ring-black/5">
       {children}
@@ -480,7 +753,7 @@ function Eyebrow({
   children,
   light = false,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   light?: boolean;
 }) {
   return (
