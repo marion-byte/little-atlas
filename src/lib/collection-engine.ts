@@ -345,26 +345,30 @@ import type {
         return actualValue !== expectedValue;
   
       case "includes":
-        if (Array.isArray(actualValue) && Array.isArray(expectedValue)) {
-          return expectedValue.some((value) => actualValue.includes(value));
+        if (!Array.isArray(actualValue)) {
+          return false;
         }
   
-        if (Array.isArray(actualValue)) {
-          return actualValue.includes(expectedValue as never);
+        if (Array.isArray(expectedValue)) {
+          return expectedValue.some((value) =>
+            actualValue.some((actual) => actual === value)
+          );
         }
   
-        return false;
+        return actualValue.some((actual) => actual === expectedValue);
   
       case "not_includes":
-        if (Array.isArray(actualValue) && Array.isArray(expectedValue)) {
-          return expectedValue.every((value) => !actualValue.includes(value));
+        if (!Array.isArray(actualValue)) {
+          return false;
         }
   
-        if (Array.isArray(actualValue)) {
-          return !actualValue.includes(expectedValue as never);
+        if (Array.isArray(expectedValue)) {
+          return expectedValue.every(
+            (value) => !actualValue.some((actual) => actual === value)
+          );
         }
   
-        return false;
+        return !actualValue.some((actual) => actual === expectedValue);
   
       case "greater_than":
         return toNumber(actualValue) > toNumber(expectedValue);
