@@ -263,7 +263,6 @@ import type {
       generatedAt: new Date().toISOString(),
     };
   }
-  
   function getStayValueByRuleField(
     stay: Stay,
     field: CollectionRule["field"]
@@ -331,7 +330,6 @@ import type {
         return null;
     }
   }
-  
   function compareRuleValue(
     actualValue: CollectionRuleValue,
     operator: CollectionRule["operator"],
@@ -345,30 +343,38 @@ import type {
         return actualValue !== expectedValue;
   
       case "includes":
-        if (!Array.isArray(actualValue)) {
-          return false;
-        }
-  
-        if (Array.isArray(expectedValue)) {
+        if (Array.isArray(actualValue) && Array.isArray(expectedValue)) {
           return expectedValue.some((value) =>
             actualValue.some((actual) => actual === value)
           );
         }
   
-        return actualValue.some((actual) => actual === expectedValue);
-  
-      case "not_includes":
-        if (!Array.isArray(actualValue)) {
-          return false;
+        if (Array.isArray(actualValue)) {
+          return actualValue.some((actual) => actual === expectedValue);
         }
   
         if (Array.isArray(expectedValue)) {
+          return expectedValue.some((value) => value === actualValue);
+        }
+  
+        return actualValue === expectedValue;
+  
+      case "not_includes":
+        if (Array.isArray(actualValue) && Array.isArray(expectedValue)) {
           return expectedValue.every(
             (value) => !actualValue.some((actual) => actual === value)
           );
         }
   
-        return !actualValue.some((actual) => actual === expectedValue);
+        if (Array.isArray(actualValue)) {
+          return !actualValue.some((actual) => actual === expectedValue);
+        }
+  
+        if (Array.isArray(expectedValue)) {
+          return expectedValue.every((value) => value !== actualValue);
+        }
+  
+        return actualValue !== expectedValue;
   
       case "greater_than":
         return toNumber(actualValue) > toNumber(expectedValue);
@@ -399,6 +405,7 @@ import type {
         return false;
     }
   }
+
   
   function toNumber(value: CollectionRuleValue): number {
     if (typeof value === "number") {
