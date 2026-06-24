@@ -119,7 +119,7 @@ export default async function CollectionPage({ params }: PageProps) {
                 )}
                 <Badge>{matchedStays.length} verblijven</Badge>
                 <Badge>Family Intelligence</Badge>
-                <Badge>{collection.rules.sortBy}</Badge>
+                <Badge>{humanizeSortBy(collection.rules.sortBy)}</Badge>
               </div>
 
               <p className="mt-8 max-w-2xl text-base leading-7 text-black/60">
@@ -140,8 +140,8 @@ export default async function CollectionPage({ params }: PageProps) {
               <div className="absolute bottom-6 left-6 right-6 rounded-3xl bg-[#faf7f2]/90 p-5 backdrop-blur">
                 <p className="text-sm font-semibold">Geselecteerd op</p>
                 <p className="mt-2 text-sm leading-6 text-black/65">
-                  Matchscore, family fit, reviewscore en relevante
-                  voorzieningen voor gezinnen.
+                  Family fit per leeftijd, matchscore, reviewkwaliteit en
+                  relevante voorzieningen voor gezinnen.
                 </p>
               </div>
             </div>
@@ -157,7 +157,7 @@ export default async function CollectionPage({ params }: PageProps) {
             title="Min. match"
             value={`${collection.rules.minimumMatchScore ?? 0}`}
           />
-          <InfoCard title="Type" value={collection.intent} />
+          <InfoCard title="Focus" value={humanizeIntent(collection.intent)} />
         </div>
       </section>
 
@@ -180,10 +180,10 @@ export default async function CollectionPage({ params }: PageProps) {
                 className="rounded-3xl bg-white/70 p-5 ring-1 ring-black/5"
               >
                 <p className="text-sm font-semibold">
-                  {rule.label ?? rule.field}
+                  {rule.label ?? humanizeRuleField(String(rule.field))}
                 </p>
                 <p className="mt-2 text-sm leading-6 text-black/55">
-                  Gewicht {rule.weight ?? 1} · {rule.source}
+                  Gewicht {rule.weight ?? 1} · {humanizeRuleSource(rule.source)}
                 </p>
               </div>
             ))}
@@ -208,80 +208,122 @@ export default async function CollectionPage({ params }: PageProps) {
 
         {matchedStays.length > 0 ? (
           <div className="grid gap-7 md:grid-cols-2">
-            {matchedStays.map(({ stay, match }) => (
-              <article
-                key={stay.id}
-                className="group overflow-hidden rounded-[2rem] bg-white/75 shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div className="relative h-80">
-                  <Image
-                    src={stay.feed.heroImage}
-                    alt={stay.feed.name}
-                    fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover transition duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute left-5 top-5 flex flex-wrap gap-2">
-                    <BadgeDark>Match {match.matchScore}</BadgeDark>
-                    {stay.feed.stars && <BadgeDark>{stay.feed.stars} sterren</BadgeDark>}
+            {matchedStays.map(({ stay, match }) => {
+              const familyScores = [
+                { label: "Baby", value: stay.familyScores.babies.score },
+                { label: "Peuter", value: stay.familyScores.toddlers.score },
+                { label: "Kids", value: stay.familyScores.kids.score },
+                { label: "Teen", value: stay.familyScores.teens.score },
+              ];
+
+              const bestFamilyScore = familyScores.sort(
+                (a, b) => b.value - a.value
+              )[0];
+
+              const concreteReasons = getConcreteReasons(stay, match);
+
+              return (
+                <article
+                  key={stay.id}
+                  className="group overflow-hidden rounded-[2rem] bg-white/75 shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <div className="relative h-80">
+                    <Image
+                      src={stay.feed.heroImage}
+                      alt={stay.feed.name}
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute left-5 top-5 flex flex-wrap gap-2">
+                      <BadgeDark>{match.matchScore}% match</BadgeDark>
+                      <BadgeDark>
+                        {bestFamilyScore.label} {bestFamilyScore.value}/100
+                      </BadgeDark>
+                    </div>
                   </div>
-                </div>
 
-                <div className="p-7">
-                  <div className="mb-4 flex flex-wrap gap-2">
-                    {stay.feed.reviewScore && (
-                      <Badge>
-                        {stay.feed.reviewLabel} {stay.feed.reviewScore}
-                      </Badge>
-                    )}
-                    {stay.feed.priceFrom && (
-                      <Badge>
-                        vanaf {stay.feed.currency} {stay.feed.priceFrom}
-                      </Badge>
-                    )}
-                  </div>
+                  <div className="p-7">
+                    <div className="mb-4 flex flex-wrap gap-2">
+                    <Badge>Little Atlas Match {match.matchScore}%</Badge>
 
-                  <h3 className="text-2xl font-semibold tracking-tight">
-                    {stay.feed.name}
-                  </h3>
+<Badge>
+  Family Fit {bestFamilyScore.value}/100
+</Badge>
 
-                  <p className="mt-2 text-black/60">
-                    {stay.feed.region}, {stay.feed.country}
-                  </p>
+{stay.feed.reviewScore && (
+  <Badge>
+    {stay.feed.reviewLabel} {stay.feed.reviewScore}
+  </Badge>
+)}
 
-                  <p className="mt-5 leading-7 text-black/70">
-                    {stay.editorial.summary}
-                  </p>
+{stay.feed.priceFrom && (
+  <Badge>
+    vanaf {stay.feed.currency} {stay.feed.priceFrom}
+  </Badge>
+)}
+                    </div>
 
-                  <div className="mt-6 rounded-3xl bg-[#faf7f2] p-5">
-                    <p className="text-sm font-semibold">Waarom geselecteerd</p>
-                    <ul className="mt-3 space-y-2 text-sm leading-6 text-black/70">
-                      {match.reasons.slice(0, 3).map((reason) => (
-                        <li key={reason.label}>• {reason.label}</li>
+                    <h3 className="text-2xl font-semibold tracking-tight">
+                      {stay.feed.name}
+                    </h3>
+
+                    <p className="mt-2 text-black/60">
+                      {stay.feed.region}, {stay.feed.country}
+                    </p>
+
+                    <p className="mt-5 leading-7 text-black/70">
+                      {stay.editorial.summary}
+                    </p>
+
+                    <div className="mt-6 grid grid-cols-4 gap-2">
+                      {familyScores.map((score) => (
+                        <div
+                          key={score.label}
+                          className="rounded-2xl bg-[#faf7f2] p-3 text-center ring-1 ring-black/5"
+                        >
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-black/45">
+                            {score.label}
+                          </p>
+                          <p className="mt-1 text-lg font-semibold">
+                            {score.value}
+                          </p>
+                        </div>
                       ))}
-                    </ul>
-                  </div>
+                    </div>
 
-                  <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                    <Link
-                      href={`/verblijven/${stay.slug}`}
-                      className="inline-flex flex-1 items-center justify-center rounded-full border border-black/15 px-5 py-3 text-sm font-semibold transition hover:bg-black hover:text-white"
-                    >
-                      Bekijk verblijf
-                    </Link>
+                    <div className="mt-6 rounded-3xl bg-[#faf7f2] p-5">
+                      <p className="text-sm font-semibold">
+                        Waarom geselecteerd
+                      </p>
+                      <ul className="mt-3 space-y-2 text-sm leading-6 text-black/70">
+                        {concreteReasons.map((reason) => (
+                          <li key={reason}>• {reason}</li>
+                        ))}
+                      </ul>
+                    </div>
 
-                    <a
-                      href={stay.feed.affiliateUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex flex-1 items-center justify-center rounded-full bg-[#171717] px-5 py-3 text-sm font-semibold text-white transition hover:bg-black"
-                    >
-                      Bekijk beschikbaarheid
-                    </a>
+                    <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                      <Link
+                        href={`/verblijven/${stay.slug}`}
+                        className="inline-flex flex-1 items-center justify-center rounded-full border border-black/15 px-5 py-3 text-sm font-semibold transition hover:bg-black hover:text-white"
+                      >
+                        Bekijk verblijf
+                      </Link>
+
+                      <a
+                        href={stay.feed.affiliateUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex flex-1 items-center justify-center rounded-full bg-[#171717] px-5 py-3 text-sm font-semibold text-white transition hover:bg-black"
+                      >
+                        Bekijk beschikbaarheid
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="rounded-[2rem] bg-white/70 p-10 text-center ring-1 ring-black/5">
@@ -393,6 +435,99 @@ export default async function CollectionPage({ params }: PageProps) {
       </section>
     </main>
   );
+}
+function getConcreteReasons(
+    stay: (typeof stays)[number],
+    match: { matchScore: number }
+  ): string[] {
+    const reasons: string[] = [];
+  
+    const family = stay.familyAttributes;
+  
+    if (family?.kidsClub) {
+      reasons.push("Uitstekende kidsclub voor kinderen van verschillende leeftijden");
+    }
+  
+    if (family?.babysitting) {
+      reasons.push("Babysitting beschikbaar voor een ontspannen avond met z'n tweeën");
+    }
+  
+    if (family?.babyFriendly) {
+      reasons.push("Goed uitgerust voor gezinnen met baby's en jonge kinderen");
+    }
+  
+    if (stay.feed.location.walkableToBeach) {
+      reasons.push("Strand op comfortabele loopafstand");
+    }
+  
+    if (stay.feed.reviewScore && stay.feed.reviewScore >= 9) {
+      reasons.push(`Hoog gewaardeerd door gezinnen (${stay.feed.reviewScore}/10)`);
+    }
+  
+    if (match.matchScore >= 90) {
+      reasons.push("Een van de sterkste matches binnen deze Little Atlas selectie");
+    }
+  
+    if (stay.familyScores.kids.score >= 90) {
+        reasons.push("Bijzonder geschikt voor gezinnen met kinderen");
+      }
+  
+      if (stay.familyScores.teens.score >= 85) {
+        reasons.push("Ook aantrekkelijk voor oudere kinderen en tieners");
+    }
+    return reasons.slice(0, 4);
+  }
+
+function humanizeIntent(intent: string): string {
+  const labels: Record<string, string> = {
+    family_age: "Leeftijd",
+    luxury: "Luxe",
+    facilities: "Faciliteiten",
+    destination: "Bestemming",
+    inspiration: "Inspiratie",
+    situation: "Gezinssituatie",
+  };
+
+  return labels[intent] ?? intent;
+}
+
+function humanizeSortBy(sortBy: string): string {
+  const labels: Record<string, string> = {
+    family_score: "Family fit",
+    match_score: "Beste match",
+    review_score: "Reviews",
+    price: "Prijs",
+  };
+
+  return labels[sortBy] ?? sortBy;
+}
+
+function humanizeRuleField(field: string): string {
+  const labels: Record<string, string> = {
+    babyFriendly: "Babyvriendelijk",
+    toddlerFriendly: "Peutervriendelijk",
+    kidsFriendly: "Geschikt voor kinderen",
+    teenFriendly: "Geschikt voor tieners",
+    babyScore: "Baby Score",
+    toddlerScore: "Peuter Score",
+    kidsScore: "Kids Score",
+    teenScore: "Teen Score",
+    reviewScore: "Reviewscore",
+    propertyType: "Type verblijf",
+    stars: "Sterrenniveau",
+  };
+
+  return labels[field] ?? field;
+}
+
+function humanizeRuleSource(source: string): string {
+  const labels: Record<string, string> = {
+    feed: "hoteldata",
+    family_intelligence: "Family Intelligence",
+    editorial: "redactie",
+  };
+
+  return labels[source] ?? source;
 }
 
 function Badge({ children }: { children: ReactNode }) {
